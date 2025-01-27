@@ -1,0 +1,8 @@
+DATABASE_URL=
+REACT_APP_API_URL=http://localhost:5000
+FACEBOOK_APP_ID=
+FACEBOOK_APP_SECRET=
+TIKTOK_CLIENT_KEY=your_tiktok_client_key
+TIKTOK_CLIENT_SECRET=your_tiktok_client_secret
+TIKTOK_ACCESS_TOKEN=your_tiktok_access_token
+JWT_SECRET=your_jwt_secret
