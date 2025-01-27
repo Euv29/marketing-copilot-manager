@@ -38,20 +38,3 @@ function App() {
 }
 
 export default App;
-
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = process.env.PORT || 5000;
-
-// Serve os arquivos estáticos do frontend
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Rota para servir o frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
