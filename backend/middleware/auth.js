@@ -13,9 +13,12 @@ const authenticate = passport.authenticate('jwt', { session: false });
 
 const authorize = (roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
-    return res.status(403).send('Access denied.');
+    return res.status(403).send('Forbidden');
   }
   next();
 };
 
-module.exports = { authenticate, authorize };
+module.exports = {
+  authenticate,
+  authorize,
+};

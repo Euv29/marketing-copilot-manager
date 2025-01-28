@@ -1,21 +1,17 @@
+// filepath: /opt/lampp/htdocs/marketing-copilot-manager/frontend/src/components/PrivateRoute.js
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const PrivateRoute = ({ children, allowedRoles }) => {
-  const token = localStorage.getItem('token');
-
-  if (!token) {
+const PrivateRoute = ({ allowedRoles, user }) => {
+  if (!user) {
     return <Navigate to="/login" />;
   }
 
-  const decodedToken = JSON.parse(atob(token.split('.')[1]));
-  const userRole = decodedToken.role;
-
-  if (!allowedRoles.includes(userRole)) {
-    return <Navigate to="/login" />;
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default PrivateRoute;

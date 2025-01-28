@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { authenticate, authorize } = require('./middleware/auth');
 
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const app = express();
 const port = process.env.PORT || 5000;
