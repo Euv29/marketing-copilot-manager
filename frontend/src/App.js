@@ -7,15 +7,9 @@ import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 import UserDashboard from './pages/user/UserDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'https://mysterious-beach-84770-b25cca31cb4f.herokuapp.com/api',
-});
-
-console.log('API baseURL:', api.defaults.baseURL);
 
 function App() {
+  console.log('App component rendered');
   return (
     <Router>
       <Routes>
