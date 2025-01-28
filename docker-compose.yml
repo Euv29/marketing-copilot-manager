@@ -4,19 +4,22 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: mc_user
+      POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: marketing_copilot
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgres://user:password@db:5432/mydatabase
       - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
       - FACEBOOK_APP_SECRET=${FACEBOOK_APP_SECRET}
       - TIKTOK_CLIENT_KEY=${TIKTOK_CLIENT_KEY}
@@ -29,7 +32,8 @@ services:
       - db
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     env_file:
       - .env
     environment:
