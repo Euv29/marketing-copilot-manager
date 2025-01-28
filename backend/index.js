@@ -82,6 +82,11 @@ app.get('/api/db-test', async (req, res) => {
   }
 });
 
+// Rota de teste para verificar a URL base da API
+app.get('/api/test-url', (req, res) => {
+  res.json({ apiUrl: process.env.REACT_APP_API_URL });
+});
+
 // Rota de registro
 app.post('/api/register', async (req, res) => {
   const { name, email, password, role } = req.body;
