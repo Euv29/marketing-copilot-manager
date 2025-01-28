@@ -30,14 +30,6 @@ const facebook = new Facebook({
 app.use(passport.initialize());
 require('./passport')(passport);
 
-// Serve os arquivos estáticos do frontend
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Rota para servir o frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-
 // Rota para a raiz
 app.get('/api', (req, res) => {
   res.send('Bem-vindo ao Marketing Copilot Manager API');
@@ -111,6 +103,14 @@ app.get('/api/user-dashboard', authenticate, authorize(['user', 'admin']), (req,
 // Rota protegida para administradores
 app.get('/api/admin-dashboard', authenticate, authorize(['admin']), (req, res) => {
   res.send('This is an admin dashboard');
+});
+
+// Serve os arquivos estáticos do frontend
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Rota para servir o frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 app.listen(port, () => {
