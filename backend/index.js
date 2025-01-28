@@ -20,12 +20,9 @@ app.use(express.json());
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_SSL === 'true' ? {
+  ssl: {
     rejectUnauthorized: false,
-    ca: fs.readFileSync(path.join(__dirname, 'certs', 'ca.crt')).toString(),
-    key: fs.readFileSync(path.join(__dirname, 'certs', 'client.key')).toString(),
-    cert: fs.readFileSync(path.join(__dirname, 'certs', 'client.crt')).toString(),
-  } : false,
+  },
 });
 
 pool.on('connect', () => {
