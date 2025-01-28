@@ -9,8 +9,10 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log('Login attempt with email:', email);
     try {
       const res = await api.post('/login', { email, password });
+      console.log('API response:', res);
       localStorage.setItem('token', res.data.token);
       const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
       const userName = decodedToken.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
@@ -20,7 +22,7 @@ function LoginPage() {
         navigate(`/${userName}/user-dashboard`);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Login error:', err);
       alert('Login failed');
     }
   };

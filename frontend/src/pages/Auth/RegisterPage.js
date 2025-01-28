@@ -8,6 +8,7 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log('Registration attempt with data:', formData);
     try {
       const response = await api.post('/register', formData);
       console.log('Registration successful:', response.data);
