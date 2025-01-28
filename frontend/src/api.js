@@ -1,3 +1,4 @@
+// filepath: /opt/lampp/htdocs/marketing-copilot-manager/frontend/src/api.js
 import axios from 'axios';
 
 console.log('API URL:', process.env.REACT_APP_API_URL);
