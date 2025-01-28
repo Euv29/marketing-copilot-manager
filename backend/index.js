@@ -6,6 +6,7 @@ const Facebook = require('facebook-node-sdk');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const { authenticate, authorize } = require('./middleware/auth');
 
 dotenv.config();
@@ -29,8 +30,16 @@ const facebook = new Facebook({
 app.use(passport.initialize());
 require('./passport')(passport);
 
+// Serve os arquivos estáticos do frontend
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Rota para servir o frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
+
 // Rota para a raiz
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Bem-vindo ao Marketing Copilot Manager API');
 });
 
