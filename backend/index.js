@@ -144,12 +144,12 @@ app.post('/api/logout', (req, res) => {
 
 // Rota protegida para usuários
 app.get('/api/user-dashboard', authenticate, authorize(['user', 'admin']), (req, res) => {
-  res.send('This is a user dashboard');
+  res.json({ message: 'This is a user dashboard', user: req.user });
 });
 
 // Rota protegida para administradores
 app.get('/api/admin-dashboard', authenticate, authorize(['admin']), (req, res) => {
-  res.send('This is an admin dashboard');
+  res.json({ message: 'This is an admin dashboard', user: req.user });
 });
 
 // Serve os arquivos estáticos do frontend

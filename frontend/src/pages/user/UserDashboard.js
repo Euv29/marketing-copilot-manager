@@ -10,7 +10,7 @@ const UserDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(`${apiBaseURL}/user-dashboard`, {
-          headers: { Authorization: token },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setData(response.data);
       } catch (error) {
