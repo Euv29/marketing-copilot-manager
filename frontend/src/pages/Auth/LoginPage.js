@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, { email, password });
+      const res = await api.post('/login', { email, password });
       localStorage.setItem('token', res.data.token);
       const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
       const userName = decodedToken.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase

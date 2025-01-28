@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import { useNavigate } from 'react-router-dom';
 
-function RegisterPage() {
+const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,11 +12,12 @@ function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/register`, { name, email, password, role });
+      const response = await api.post('/register', { name, email, password, role });
+      console.log('User registered:', response.data);
       alert('User registered successfully');
       navigate('/login');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Registration failed:', error);
       alert('Registration failed');
     }
   };
@@ -54,6 +55,6 @@ function RegisterPage() {
       </form>
     </div>
   );
-}
+};
 
 export default RegisterPage;
