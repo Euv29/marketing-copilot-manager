@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
 const Facebook = require('facebook-node-sdk');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const path = require('path');
 const { authenticate, authorize } = require('./middleware/auth');
 
 dotenv.config();
@@ -23,6 +24,23 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
+
+// Função para executar o arquivo init.sql
+const executeSQLFile = async (filePath) => {
+  const client = await pool.connect();
+  try {
+    const sql = fs.readFileSync(filePath, 'utf8');
+    await client.query(sql);
+    console.log('Database initialized');
+  } catch (err) {
+    console.error('Error executing SQL file:', err);
+  } finally {
+    client.release();
+  }
+};
+
+// Executa o arquivo init.sql na inicialização
+executeSQLFile(path.join(__dirname, 'init.sql'));
 
 pool.connect((err, client, release) => {
   if (err) {
