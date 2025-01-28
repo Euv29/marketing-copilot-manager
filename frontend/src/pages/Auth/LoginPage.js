@@ -13,13 +13,19 @@ function LoginPage() {
     try {
       const res = await api.post('/login', { email, password });
       console.log('API response:', res);
-      localStorage.setItem('token', res.data.token);
-      const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
-      const userName = decodedToken.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
-      if (decodedToken.role === 'admin') {
-        navigate(`/${userName}/admin-dashboard`);
+      if (res.data && res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
+        console.log('Decoded token:', decodedToken);
+        const userName = decodedToken.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
+        if (decodedToken.role === 'admin') {
+          navigate(`/${userName}/admin-dashboard`);
+        } else {
+          navigate(`/${userName}/user-dashboard`);
+        }
       } else {
-        navigate(`/${userName}/user-dashboard`);
+        console.error('Invalid API response:', res);
+        alert('Login failed: Invalid response from server');
       }
     } catch (err) {
       console.error('Login error:', err);
