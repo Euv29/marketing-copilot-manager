@@ -25,6 +25,14 @@ const pool = new Pool({
   }
 });
 
+pool.on('connect', () => {
+  console.log('Connected to the database');
+});
+
+pool.on('error', (err) => {
+  console.error('Error acquiring client', err);
+});
+
 // Função para executar o arquivo init.sql
 const executeSQLFile = async (filePath) => {
   const client = await pool.connect();
@@ -155,3 +163,7 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
