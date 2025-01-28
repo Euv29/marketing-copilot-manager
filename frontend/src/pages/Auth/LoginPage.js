@@ -17,9 +17,9 @@ const LoginPage = () => {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       console.log('Decoded token:', decodedToken);
       if (decodedToken.role === 'admin') {
-        navigate('/admin-dashboard');
+        navigate(`/admin/${decodedToken.name}/dashboard`);
       } else {
-        navigate('/user-dashboard');
+        navigate(`/user/${decodedToken.name}/dashboard`);
       }
     } catch (error) {
       console.error('Error during login:', error);
