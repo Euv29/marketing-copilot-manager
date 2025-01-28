@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import apiBaseURL from '../../api';
 
 const UserDashboard = () => {
-  const [user, setUser] = useState({});
-  const navigate = useNavigate();
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      setUser({
-        name: decodedToken.name,
-        email: decodedToken.email,
-        role: decodedToken.role,
-      });
-    }
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${apiBaseURL}/user-dashboard`, {
+          headers: { Authorization: token },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
       <h1>User Dashboard</h1>
-      <p>Welcome to your dashboard, {user.name}!</p>
-      <p>Email: {user.email}</p>
-      <p>Role: {user.role}</p>
-      <button onClick={handleLogout}>Logout</button>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };

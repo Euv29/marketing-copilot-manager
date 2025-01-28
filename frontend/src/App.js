@@ -12,7 +12,6 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch user data from API or local storage
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('token');
