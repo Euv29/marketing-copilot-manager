@@ -33,6 +33,28 @@ pool.on('error', (err) => {
   console.error('Error acquiring client', err);
 });
 
+// Rota de login
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const resUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (resUser.rows.length === 0) {
+      return res.status(400).send('User not found');
+    }
+    const user = resUser.rows[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send('Invalid credentials');
+    }
+    const payload = { id: user.id, name: user.name, email: user.email, role: user.role };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token: `Bearer ${token}` });
+  } catch (err) {
+    console.error('Error during login:', err);
+    res.status(500).send('Server error');
+  }
+});
+
 // Serve os arquivos estáticos do frontend
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 

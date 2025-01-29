@@ -35,8 +35,22 @@ function App() {
       <Route path="/" element={<WelcomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/user/:username/dashboard" element={<PrivateRoute allowedRoles={['user', 'admin']} user={user}><UserDashboard /></PrivateRoute>} />
-      <Route path="/admin/:username/dashboard" element={<PrivateRoute allowedRoles={['admin']} user={user}><AdminDashboard /></PrivateRoute>} />
+      <Route
+        path="/user/:username/dashboard"
+        element={
+          <PrivateRoute allowedRoles={['user', 'admin']} user={user}>
+            <UserDashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/:username/dashboard"
+        element={
+          <PrivateRoute allowedRoles={['admin']} user={user}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
