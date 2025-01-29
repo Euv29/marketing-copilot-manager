@@ -9,5 +9,8 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
     "*": "prettier --write"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   }
 }
