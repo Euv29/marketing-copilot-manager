@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -56,21 +55,6 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Serve os arquivos estáticos do frontend
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Rota para servir o frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
-
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
 // Rota de registro
 app.post('/api/register', async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -78,7 +62,7 @@ app.post('/api/register', async (req, res) => {
     // 1. Verifica se o usuário já existe
     const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userExists.rows.length > 0) {
-      return res.status(400).send('User already exists');
+      return res.status(400).json({ error: 'User already exists' });
     }
 
     // 2. Criptografa a senha
@@ -95,6 +79,22 @@ app.post('/api/register', async (req, res) => {
     res.status(201).json({ user: newUser.rows[0] });
   } catch (err) {
     console.error('Error during registration:', err);
-    res.status(500).send('Server error');
+    res.status(500).json({ error: 'Server error' });
   }
 });
+
+// Serve os arquivos estáticos do frontend
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Rota para servir o frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
+});
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
