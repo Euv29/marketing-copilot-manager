@@ -34,3 +34,7 @@ backend/node_modules/
 # Cache e arquivos grandes
 *.pack
 *.cache
+
+# Variáveis de ambiente
+backend/.env
+frontend/.env
