@@ -21,9 +21,10 @@ O Gerenciador de Marketing Copilot é uma ferramenta baseada em IA para gerencia
 
 ## Estrutura do Projeto
 
-O projeto está organizado da seguinte forma:
+```markdown
+## Estrutura do Projeto
 
-```
+```plaintext
 marketing-copilot-manager/
 ├── backend/
 │   ├── middleware/
@@ -59,6 +60,7 @@ marketing-copilot-manager/
 ├── Procfile
 ├── README.md
 └── package.json
+```
 ```
 
 ## Tecnologias Utilizadas
