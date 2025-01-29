@@ -145,7 +145,12 @@ curl -X POST http://localhost:5000/api/logout
           npm install
           ```
 
-3. Inicie o servidor:
+3. Definir a Variável de Ambiente no Terminal:
+          ```sh
+          export NODE_OPTIONS=--openssl-legacy-provider
+          ```
+
+4. Inicie o servidor:
           ```sh
           npm start
           ```
