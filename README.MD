@@ -23,13 +23,43 @@ O Gerenciador de Marketing Copilot é uma ferramenta baseada em IA para gerencia
 
 O projeto está organizado da seguinte forma:
 
-- `frontend/`: Contém o código fonte da aplicação React
-     - `src/`: Código fonte React
-     - `public/`: Arquivos públicos como HTML, CSS e imagens
-- `backend/`: Contém o código fonte do servidor Node.js
-- `config/`: Arquivos de configuração
-- `tests/`: Testes automatizados
-- `docker-compose.yml`: Arquivo de configuração do Docker Compose
+```
+marketing-copilot-manager/
+├── backend/
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── index.js
+│   ├── package.json
+│   └── .env
+├── frontend/
+│   ├── build/
+│   ├── public/
+│   │   ├── marco.ai.png
+│   │   └── index.html
+│   ├── src/
+│   │   ├── api.js
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   ├── pages/
+│   │   │   ├── Auth/
+│   │   │   │   ├── LoginPage.js
+│   │   │   │   └── RegisterPage.js
+│   │   │   ├── admin/
+│   │   │   │   └── AdminDashboard.js
+│   │   │   ├── user/
+│   │   │   │   └── UserDashboard.js
+│   │   │   └── NotFoundPage.js
+│   │   ├── components/
+│   │   │   └── PrivateRoute.js
+│   │   └── styles/
+│   │       └── App.css
+│   ├── package.json
+│   └── .env
+├── .gitignore
+├── Procfile
+├── README.md
+└── package.json
+```
 
 ## Tecnologias Utilizadas
 
@@ -49,29 +79,29 @@ O projeto está organizado da seguinte forma:
 
 1. Clone o repositório:
 
-          ```sh
-          git clone https://github.com/seu-usuario/marketing-copilot-manager.git
-          cd marketing-copilot-manager
-          ```
+    ```sh
+    git clone https://github.com/seu-usuario/marketing-copilot-manager.git
+    cd marketing-copilot-manager
+    ```
 
 2. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
 
-          ```env
-          DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
-          REACT_APP_API_URL=http://localhost:5000
-          FACEBOOK_APP_ID=seu_facebook_app_id
-          FACEBOOK_APP_SECRET=seu_facebook_app_secret
-          TIKTOK_CLIENT_KEY=seu_tiktok_client_key
-          TIKTOK_CLIENT_SECRET=seu_tiktok_client_secret
-          TIKTOK_ACCESS_TOKEN=seu_tiktok_access_token
-          JWT_SECRET=seu_jwt_secret
-          ```
+    ```env
+    DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
+    REACT_APP_API_URL=http://localhost:5000
+    FACEBOOK_APP_ID=seu_facebook_app_id
+    FACEBOOK_APP_SECRET=seu_facebook_app_secret
+    TIKTOK_CLIENT_KEY=seu_tiktok_client_key
+    TIKTOK_CLIENT_SECRET=seu_tiktok_client_secret
+    TIKTOK_ACCESS_TOKEN=seu_tiktok_access_token
+    JWT_SECRET=seu_jwt_secret
+    ```
 
 3. Construa e inicie os containers Docker:
 
-          ```sh
-          sudo docker-compose up --build
-          ```
+    ```sh
+    sudo docker-compose up --build
+    ```
 
 ## Uso
 
@@ -110,10 +140,10 @@ curl -X POST http://localhost:5000/api/logout
 1. Certifique-se de que o arquivo `.env` está configurado corretamente com as variáveis de ambiente necessárias.
 2. Execute os seguintes comandos para iniciar os contêineres Docker:
 
-          ```sh
-          sudo docker-compose down
-          sudo docker-compose up --build
-          ```
+    ```sh
+    sudo docker-compose down
+    sudo docker-compose up --build
+    ```
 
 3. Acesse o frontend em `http://localhost:3000` e faça login para ver as alterações.
 
@@ -121,47 +151,47 @@ curl -X POST http://localhost:5000/api/logout
 
 1. Navegue até o diretório `backend`:
 
-          ```sh
-          cd backend
-          ```
+    ```sh
+    cd backend
+    ```
 
 2. Instale as dependências:
 
-          ```sh
-          npm install
-          ```
+    ```sh
+    npm install
+    ```
 
 3. Inicie o servidor:
 
-          ```sh
-          npm start
-          ```
+    ```sh
+    npm start
+    ```
 
 ### Rodando o Frontend
 
 1. Navegue até o diretório `frontend`:
 
-          ```sh
-          cd frontend
-          ```
+    ```sh
+    cd frontend
+    ```
 
 2. Instale as dependências:
 
-          ```sh
-          npm install
-          ```
+    ```sh
+    npm install
+    ```
 
 3. Definir a Variável de Ambiente no Terminal:
 
-          ```sh
-          export NODE_OPTIONS=--openssl-legacy-provider
-          ```
+    ```sh
+    export NODE_OPTIONS=--openssl-legacy-provider
+    ```
 
 4. Inicie o servidor:
 
-          ```sh
-          npm start
-          ```
+    ```sh
+    npm start
+    ```
 
 Acesse o frontend em `http://localhost:3000` e o backend em `http://localhost:5000`.
 
@@ -169,40 +199,40 @@ Acesse o frontend em `http://localhost:3000` e o backend em `http://localhost:50
 
 1. Faça login no Heroku:
 
-          ```sh
-          heroku login
-          ```
+    ```sh
+    heroku login
+    ```
 
 2. Crie um novo aplicativo no Heroku:
 
-          ```sh
-          heroku create nome-do-seu-app
-          ```
+    ```sh
+    heroku create nome-do-seu-app
+    ```
 
 3. Adicione o repositório remoto do Heroku:
 
-          ```sh
-          git remote add heroku https://git.heroku.com/nome-do-seu-app.git
-          ```
+    ```sh
+    git remote add heroku https://git.heroku.com/nome-do-seu-app.git
+    ```
 
 4. Faça o push do código para o Heroku:
 
-          ```sh
-          git push heroku main
-          ```
+    ```sh
+    git push heroku main
+    ```
 
 5. Configure as variáveis de ambiente no Heroku:
 
-          ```sh
-          heroku config:set DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
-          heroku config:set REACT_APP_API_URL=https://nome-do-seu-app.herokuapp.com
-          heroku config:set FACEBOOK_APP_ID=seu_facebook_app_id
-          heroku config:set FACEBOOK_APP_SECRET=seu_facebook_app_secret
-          heroku config:set TIKTOK_CLIENT_KEY=seu_tiktok_client_key
-          heroku config:set TIKTOK_CLIENT_SECRET=seu_tiktok_client_secret
-          heroku config:set TIKTOK_ACCESS_TOKEN=seu_tiktok_access_token
-          heroku config:set JWT_SECRET=seu_jwt_secret
-          ```
+    ```sh
+    heroku config:set DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
+    heroku config:set REACT_APP_API_URL=https://nome-do-seu-app.herokuapp.com
+    heroku config:set FACEBOOK_APP_ID=seu_facebook_app_id
+    heroku config:set FACEBOOK_APP_SECRET=seu_facebook_app_secret
+    heroku config:set TIKTOK_CLIENT_KEY=seu_tiktok_client_key
+    heroku config:set TIKTOK_CLIENT_SECRET=seu_tiktok_client_secret
+    heroku config:set TIKTOK_ACCESS_TOKEN=seu_tiktok_access_token
+    heroku config:set JWT_SECRET=seu_jwt_secret
+    ```
 
 6. Acesse o aplicativo no Heroku em `https://nome-do-seu-app.herokuapp.com`.
 
@@ -235,7 +265,3 @@ Acesse o frontend em `http://localhost:3000` e o backend em `http://localhost:50
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
-### Conclusão
-
-Com essas atualizações, o `README.md` agora reflete todas as funcionalidades e instruções necessárias para configurar e usar o projeto. Se precisar de mais alguma coisa ou tiver outras perguntas, sinta-se à vontade para perguntar!
