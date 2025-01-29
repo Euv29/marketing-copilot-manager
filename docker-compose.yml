@@ -17,7 +17,7 @@ services:
     build:
       context: ./backend
     env_file:
-      - .env
+      - ./backend/.env
     environment:
       - DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
       - DATABASE_SSL=false
