@@ -1,35 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api';
+import axios from 'axios';
+import apiBaseURL from '../../api';
 
-function LoginPage() {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Login attempt with email:', email);
     try {
-      const res = await api.post('/login', { email, password });
-      console.log('API response:', res);
-      if (res.data && res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
-        console.log('Decoded token:', decodedToken);
-        const userName = decodedToken.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and convert to lowercase
-        if (decodedToken.role === 'admin') {
-          navigate(`/${userName}/admin-dashboard`);
-        } else {
-          navigate(`/${userName}/user-dashboard`);
-        }
+      const response = await axios.post(`${apiBaseURL}/login`, { email, password });
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      console.log('Decoded token:', decodedToken);
+      if (decodedToken.role === 'admin') {
+        navigate(`/admin/${decodedToken.name}/dashboard`);
       } else {
-        console.error('Invalid API response:', res);
-        alert('Login failed: Invalid response from server');
+        navigate(`/user/${decodedToken.name}/dashboard`);
       }
-    } catch (err) {
-      console.error('Login error:', err);
-      alert('Login failed');
+    } catch (error) {
+      console.error('Error during login:', error);
     }
   };
 
@@ -42,19 +35,17 @@ function LoginPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
         <button type="submit">Login</button>
       </form>
     </div>
   );
-}
+};
 
 export default LoginPage;
