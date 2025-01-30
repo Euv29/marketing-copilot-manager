@@ -2,11 +2,9 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: mc_user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: marketing_copilot
+    image: postgres
+    env_file:
+      - ./backend/.env
     ports:
       - "5432:5432"
     volumes:
@@ -14,31 +12,21 @@ services:
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
-    build:
-      context: ./backend
+    build: ./backend
     env_file:
-      - .env
-    environment:
-      - DATABASE_URL=postgresql://mc_user:password@db:5432/marketing_copilot
-      - DATABASE_SSL=false
-      - JWT_SECRET=your_jwt_secret
-      - FACEBOOK_APP_ID=983373370512465
-      - FACEBOOK_APP_SECRET=70544643faec22cc10a6a0a035ec73fb
-      - TIKTOK_CLIENT_KEY=${TIKTOK_CLIENT_KEY}
-      - TIKTOK_CLIENT_SECRET=${TIKTOK_CLIENT_SECRET}
-      - TIKTOK_ACCESS_TOKEN=${TIKTOK_ACCESS_TOKEN}
+      - ./backend/.env
     ports:
       - "5000:5000"
     depends_on:
       - db
 
   frontend:
-    build:
-      context: ./frontend
+    build: ./frontend
     env_file:
-      - .env
+      - ./frontend/.env
     environment:
       - REACT_APP_API_URL=https://mysterious-beach-84770-b25cca31cb4f.herokuapp.com/api
+      - NODE_OPTIONS=--openssl-legacy-provider
     ports:
       - "3000:3000"
     depends_on:

@@ -3,6 +3,18 @@
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "husky": "^9.1.7"
+=======
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*": "prettier --write"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
+>>>>>>> b56fda3924206b6ccbf45dc38e4894e6c017f7f0
   }
 }
